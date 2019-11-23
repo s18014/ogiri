@@ -5,6 +5,10 @@
     <title>お題投稿</title>
 </head>
 <body>
-post-theme page
+<form th:method="post" th:action="@{/user/post-theme}" th:object="${themeCreateForm}">
+    <input type="text" th:field="*{content}" />
+    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">エラーメッセージ</p>
+    <input type="submit" value="投稿" />
+</form>
 </body>
 </html>

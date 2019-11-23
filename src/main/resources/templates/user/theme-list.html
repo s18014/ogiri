@@ -5,7 +5,11 @@
     <title>お題一覧</title>
 </head>
 <body>
-theme-list page
+<ul th:unless="${themes.isEmpty()}">
+    <li th:each="theme: ${themes}">
+        <p th:text="${theme}"></p>
+    </li>
+</ul>
 
 </body>
 </html>

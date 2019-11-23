@@ -5,7 +5,8 @@
     <title>ユーザー</title>
 </head>
 <body>
-<p th:text="|${name}さん　ようこそ|"></p>
+<p th:if="${name}" th:text="|${name}さん　ようこそ|"></p>
+<p th:unless="${name}">名無しさん　ようこそ</p>
 <a href="user/post-theme">
     <p>お題投稿</p>
 </a>
