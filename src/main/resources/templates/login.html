@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+</head>
+<body>
+<form method="post" th:action="@{/login}" th:object="${loginForm}">
+    <div>
+        <label>
+            ユーザーID: <input type="text" th:field="*{userID}"/>
+            <small th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}">IDエラー</small>
+        </label>
+    </div>
+    <div>
+        <label>
+            パスワード: <input type="password" th:field="*{password}"/>
+            <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}">IDエラー</small>
+        </label>
+    </div>
+    <div>
+        <input type="submit" value="ログイン" />
+    </div>
+</form>
+</body>
+</html>

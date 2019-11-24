@@ -16,6 +16,6 @@ class JdbcThemeRepository(private val jdbcTemplate: JdbcTemplate ): ThemeReposit
     }
 
     override fun create(userID: String, content: String) {
-        jdbcTemplate.update("INSERT INTO themes (user_id, time_stamp, content) values(?, curdate(), ?)", userID, content)
+        jdbcTemplate.update("INSERT INTO themes (user_id, content) values(?, ?)", userID, content)
     }
 }

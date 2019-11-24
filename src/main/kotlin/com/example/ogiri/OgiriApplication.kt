@@ -26,7 +26,7 @@ class OgiriApplication {
     		CREATE TABLE IF NOT EXISTS themes (
     			theme_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     			user_id VARCHAR(255) NOT NULL,
-				time_stamp DATE NOT NULL,
+				time_stamp DATETIME NOT NULL DEFAULT now(),
 				content VARCHAR(255) NOT NULL,
 				CONSTRAINT fk_themes_users_user_id FOREIGN KEY (user_id) REFERENCES (user_id)
 			)
@@ -57,7 +57,7 @@ class OgiriApplication {
 				answer_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 				user_id VARCHAR(255) NOT NULL,
 				theme_id BIGINT NOT NULL,
-				time_stamp DATE NOT NULL,
+				time_stamp DATETIME NOT NULL DEFAULT now(),
 				content VARCHAR(255) NOT NULL,
 				CONSTRAINT fk_answers_users_user_id FOREIGN KEY (user_id) REFERENCES (user_id),
 				CONSTRAINT fk_answers_themes_theme_id FOREIGN KEY (theme_id) REFERENCES (theme_id)
