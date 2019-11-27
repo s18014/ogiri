@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse
 @Controller
 @RequestMapping("user")
 class UserController(private val userRepository: UserRepository,
-                     private val themeRepository: ThemeRepository) {
+                     private val themeRepository: ThemeRepository,
+                     private val tagRepository: TagRepository) {
 
     @GetMapping("")
     fun index(model: Model,
@@ -23,10 +24,11 @@ class UserController(private val userRepository: UserRepository,
             val user = userRepository.findByToken(token)
             if (user != null) {
                 model.addAttribute("name", user.name)
-                println(String.format("%s found", user.name))
+                return "user/index"
             }
         }
-        return "user/index"
+        // ログインしていなければログイン画面に飛ばす
+        return "redirect:/login"
     }
 
     @GetMapping("post-theme")
@@ -35,13 +37,21 @@ class UserController(private val userRepository: UserRepository,
     }
 
     @PostMapping("post-theme")
-    fun createTheme(@Validated form: ThemeCreateForm,
-                    @CookieValue("token") token: String?,
+    fun createTheme(@CookieValue("token") token: String?,
+                    @Validated form: ThemeCreateForm,
                     bindingResult: BindingResult): String {
+        if (bindingResult.hasErrors()) return "user/post-theme"
         if (token != null) {
             val user = userRepository.findByToken(token)
             if (user != null) {
-                themeRepository.create(user.userID, requireNotNull(form.content))
+                val theme = themeRepository.create(user.userID, requireNotNull(form.content))
+                val names: List<String>? = form.tags?.trim()?.split("( |　)+".toRegex())
+                if (names != null) {
+                    for (name in names) {
+                        val tag = tagRepository.create(name)
+                        tagRepository.connectTagWithTheme(theme.themeID, tag.id)
+                    }
+                }
             }
         }
         return "redirect:/user/theme-list"

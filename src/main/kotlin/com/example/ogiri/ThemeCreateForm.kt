@@ -7,5 +7,5 @@ class ThemeCreateForm {
     @NotBlank
     @Size(max = 255)
     var content: String? = null
-
+    var tags: String? = null
 }

@@ -7,7 +7,7 @@
 <body>
 <ul th:unless="${themes.isEmpty()}">
     <li th:each="theme: ${themes}">
-        <p th:text="${theme}"></p>
+        <p th:text="${theme.content}"></p>
     </li>
 </ul>
 

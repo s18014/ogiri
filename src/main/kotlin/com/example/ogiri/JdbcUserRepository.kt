@@ -24,21 +24,20 @@ class JdbcUserRepository(private val jdbcTemplate: JdbcTemplate): UserRepository
     }
 
     override fun addToken(userID: String, password: String): String? {
-        val user = jdbcTemplate.query("SELECT user_id, password, token, name FROM users where user_id = ? and password = ?", rowMapper, userID, password).firstOrNull()
-        println(String.format("%s: %s: %s", userID, password, user))
+        val user = jdbcTemplate.query("SELECT user_id, password, token, name FROM users WHERE user_id = ? AND password = ?", rowMapper, userID, password).firstOrNull()
         if (user != null) {
             val value: String = password + System.currentTimeMillis()
-            var token: String = ""
+            // TODO: トークンが重複しないようにループ処理を入れる
             try {
                 val digest: MessageDigest = MessageDigest.getInstance("SHA-1")
                 val result: ByteArray = digest.digest(value.toByteArray())
-                token = String.format("%040x", BigInteger(1, result))
+                val token = String.format("%040x", BigInteger(1, result))
+                jdbcTemplate.update("UPDATE users SET token = ? WHERE user_id = ?", token, userID)
+                return token
             } catch (e: Exception) {
                 e.printStackTrace()
                 return null
             }
-            jdbcTemplate.update("UPDATE users SET token = ? where user_id = ?", token, userID)
-            return token
         }
         return null
     }

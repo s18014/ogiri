@@ -5,13 +5,21 @@
     <title>トップ</title>
 </head>
 <body>
-<a href="/theme">
+<menu>
+    <a href="/user" th:if="${user != null}">
+        <p>マイページ</p>
+    </a>
+    <a href="/login" th:if="${user == null}">
+        <p>ログイン</p>
+    </a>
+</menu>
+<a href="/search">
     <p>お題検索</p>
 </a>
 <a href="ranking/theme">
     <p>お題ランキング</p>
 </a>
-<a href="ranking/">
+<a href="ranking/user">
     <p>ユーザーランキング</p>
 </a>
 </body>

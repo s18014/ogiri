@@ -6,9 +6,22 @@
 </head>
 <body>
 <form th:method="post" th:action="@{/user/post-theme}" th:object="${themeCreateForm}">
-    <input type="text" th:field="*{content}" />
-    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">エラーメッセージ</p>
-    <input type="submit" value="投稿" />
+    <div>
+        お題: <input type="text" th:field="*{content}" />
+        <div>
+            <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}">エラーメッセージ</small>
+        </div>
+    </div>
+    <div>
+        タグ: <input type="text" th:field="*{tags}" />
+        <small>タグを複数付ける場合は空白を入れてください</small>
+        <div>
+            <small th:if="${#fields.hasErrors('tags')}" th:errors="*{content}">エラーメッセージ</small>
+        </div>
+    </div>
+    <div>
+        <button type="button" onclick="submit();">投稿</button>
+    </div>
 </form>
 </body>
 </html>
