@@ -16,7 +16,7 @@
         タグ: <input type="text" th:field="*{tags}" />
         <small>タグを複数付ける場合は空白を入れてください</small>
         <div>
-            <small th:if="${#fields.hasErrors('tags')}" th:errors="*{content}">エラーメッセージ</small>
+            <small th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}">エラーメッセージ</small>
         </div>
     </div>
     <div>

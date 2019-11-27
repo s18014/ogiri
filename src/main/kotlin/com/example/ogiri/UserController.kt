@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
 
 @Controller
 @RequestMapping("user")
@@ -83,5 +85,12 @@ class UserController(private val userRepository: UserRepository,
         response.addCookie(Cookie("token", "token2"))
         println("add cookie")
         return "redirect:/user"
+    }
+
+    class ThemeCreateForm {
+        @NotBlank
+        @Size(max = 255)
+        var content: String? = null
+        var tags: String? = null
     }
 }

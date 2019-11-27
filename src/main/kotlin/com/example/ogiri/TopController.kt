@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("")
-class TopController(private val userRepository: UserRepository) {
+class TopController(private val userRepository: UserRepository,
+                    private val themeRepository: ThemeRepository) {
     @GetMapping("")
     fun index(model: Model,
               @CookieValue("token") token: String?): String {
@@ -18,6 +19,8 @@ class TopController(private val userRepository: UserRepository) {
                 model.addAttribute("user", user)
             }
         }
+        val themes = themeRepository.findLatest(20)
+        model.addAttribute("themes", themes)
         return "/index"
     }
 

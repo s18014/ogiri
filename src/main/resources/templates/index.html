@@ -9,6 +9,9 @@
     <a href="/user" th:if="${user != null}">
         <p>マイページ</p>
     </a>
+    <a href="/logout" th:if="${user != null}">
+        <p>ログアウト</p>
+    </a>
     <a href="/login" th:if="${user == null}">
         <p>ログイン</p>
     </a>
@@ -22,5 +25,34 @@
 <a href="ranking/user">
     <p>ユーザーランキング</p>
 </a>
+<h3>最新のお題</h3>
+<ul th:unless="${themes.isEmpty()}">
+    <li th:each="theme: ${themes}">
+        <a th:href="@{themes/{id}(id=${theme.themeID})}">
+            <div class="theme-item">
+                <small th:text="${theme.timeStamp}"></small>
+                <p th:text="${theme.content}"></p>
+            </div>
+        </a>
+    </li>
+</ul>
+<style type="text/css">
+    li {
+        list-style-type: none;
+    }
+    li p {
+        padding-left: 10px;
+    }
+    .theme-item {
+        border-bottom: solid 2px;
+    }
+    .theme-item:hover {
+        background-color: rgba(233, 233, 233, 0.5);
+    }
+    li a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
 </body>
 </html>

@@ -5,6 +5,21 @@
     <title>お題</title>
 </head>
 <body>
-お題の詳細
+<p th:text="${theme.content}"></p>
+<form th:method="patch" th:action="@{/themes/{id}(id=${theme.themeID})}" th:object="${answerCreateForm}">
+    <div>
+        <input type="text" th:field="*{content}" />
+        <input type="submit" value="回答する" />
+        <div>
+            <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}">エラーメッセージ</small>
+        </div>
+    </div>
+</form>
+<h3>回答一覧</h3>
+<ul th:unless="${answers.isEmpty()}">
+    <li th:each="answer: ${answers}">
+        <p th:text="${answer.content}"></p>
+    </li>
+</ul>
 </body>
 </html>
