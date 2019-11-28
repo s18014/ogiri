@@ -47,7 +47,8 @@ class UserController(private val userRepository: UserRepository,
             val user = userRepository.findByToken(token)
             if (user != null) {
                 val theme = themeRepository.create(user.userID, requireNotNull(form.content))
-                val names: List<String>? = form.tags?.trim()?.split("( |　)+".toRegex())
+                // タグを空白で区切って余白を削除して、空白のみは削除
+                val names: List<String>? = form.tags?.trim()?.split("( |　)+".toRegex())?.filter { it != "" }
                 if (names != null) {
                     for (name in names) {
                         val tag = tagRepository.create(name)
@@ -91,6 +92,7 @@ class UserController(private val userRepository: UserRepository,
         @NotBlank
         @Size(max = 255)
         var content: String? = null
+
         var tags: String? = null
     }
 }

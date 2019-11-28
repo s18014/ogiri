@@ -15,6 +15,8 @@ class TopController(private val userRepository: UserRepository,
               @CookieValue("token") token: String?): String {
         if (token != null) {
             val user = userRepository.findByToken(token)
+            println(user)
+            println(token)
             if (user != null) {
                 model.addAttribute("user", user)
             }

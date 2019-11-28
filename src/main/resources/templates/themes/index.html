@@ -6,15 +6,26 @@
 </head>
 <body>
 <p th:text="${theme.content}"></p>
-<form th:method="patch" th:action="@{/themes/{id}(id=${theme.themeID})}" th:object="${answerCreateForm}">
-    <div>
-        <input type="text" th:field="*{content}" />
-        <input type="submit" value="回答する" />
+<div style="padding: 5px;">
+    タグ:
+<span th:if="${tags != null}" th:each="tag: ${tags}">
+    <small style="font-size: 11px; background-color: rgba(200, 200, 200, 0.3); border-radius: 5px; padding: 3px;" th:text="${tag.name}"></small>
+</span>
+</div>
+<a th:if="${isMyTheme}" th:href="@{/themes/{id}/edit(id=${theme.themeID})}">
+    <p>編集</p>
+</a>
+<div>
+    <form th:method="patch" th:action="@{/themes/{id}(id=${theme.themeID})}" th:object="${answerCreateForm}">
         <div>
-            <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}">エラーメッセージ</small>
+            <input type="text" th:field="*{content}" />
+            <input type="submit" value="回答する" />
+            <div>
+                <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}">エラーメッセージ</small>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 <h3>回答一覧</h3>
 <ul th:unless="${answers.isEmpty()}">
     <li th:each="answer: ${answers}">

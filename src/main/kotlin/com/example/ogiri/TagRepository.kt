@@ -4,6 +4,8 @@ package com.example.ogiri
 interface TagRepository {
     fun create(name: String): Tag
     fun findById(id: Long): Tag?
+    fun findByName(name: String): Tag?
     fun findByThemeId(themeID: Long): List<Tag>?
     fun connectTagWithTheme(themeID: Long, tagID: Long)
+    fun disconnectTagWithTheme(themeID: Long, tagID: Long)
 }

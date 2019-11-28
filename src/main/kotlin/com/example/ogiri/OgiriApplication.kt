@@ -28,7 +28,7 @@ class OgiriApplication {
     			user_id VARCHAR(255) NOT NULL,
 				time_stamp DATETIME NOT NULL DEFAULT now(),
 				content VARCHAR(255) NOT NULL,
-				CONSTRAINT fk_themes_users_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+				CONSTRAINT fk_themes_users_user_id FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 			)
 		""")
 
@@ -46,8 +46,8 @@ class OgiriApplication {
 				tag_mapping_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 				theme_id BIGINT NOT NULL,
 				tag_id BIGINT NOT NULL,
-				CONSTRAINT fk_tag_mappings_themes_theme_id FOREIGN KEY (theme_id) REFERENCES themes (theme_id),
-				CONSTRAINT fk_tag_mappings_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags (tag_id)
+				CONSTRAINT fk_tag_mappings_themes_theme_id FOREIGN KEY (theme_id) REFERENCES themes (theme_id) ON DELETE CASCADE,
+				CONSTRAINT fk_tag_mappings_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags (tag_id) ON DELETE CASCADE
 			)
 		""")
 
@@ -59,8 +59,8 @@ class OgiriApplication {
 				theme_id BIGINT NOT NULL,
 				time_stamp DATETIME NOT NULL DEFAULT now(),
 				content VARCHAR(255) NOT NULL,
-				CONSTRAINT fk_answers_users_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
-				CONSTRAINT fk_answers_themes_theme_id FOREIGN KEY (theme_id) REFERENCES themes (theme_id)
+				CONSTRAINT fk_answers_users_user_id FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+				CONSTRAINT fk_answers_themes_theme_id FOREIGN KEY (theme_id) REFERENCES themes (theme_id) ON DELETE CASCADE
 			)
 		""")
 
@@ -71,8 +71,8 @@ class OgiriApplication {
 				user_id VARCHAR(255) NOT NULL,
 				answer_id BIGINT NOT NULL,
 				eval BOOLEAN NOT NULL,
-				CONSTRAINT fk_ratings_users_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
-				CONSTRAINT fk_ratings_answers_answer_id FOREIGN KEY (answer_id) REFERENCES answers (answer_id)
+				CONSTRAINT fk_ratings_users_user_id FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+				CONSTRAINT fk_ratings_answers_answer_id FOREIGN KEY (answer_id) REFERENCES answers (answer_id) ON DELETE CASCADE
 			)
 		""")
 	}

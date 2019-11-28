@@ -25,6 +25,10 @@ class JdbcTagRepository(private val jdbcTemplate: JdbcTemplate): TagRepository {
         return jdbcTemplate.query("SELECT tag_id, name FROM tags WHERE tag_id = ?", rowMapper, id).firstOrNull()
     }
 
+    override fun findByName(name: String): Tag? {
+        return jdbcTemplate.query("SELECT tag_id, name FROM tags WHERE name = ?", rowMapper, name).firstOrNull()
+    }
+
     override fun findByThemeId(themeID: Long): List<Tag>? {
         return jdbcTemplate.query("""
             SELECT tags.tag_id, tags.name FROM tags
@@ -36,5 +40,9 @@ class JdbcTagRepository(private val jdbcTemplate: JdbcTemplate): TagRepository {
 
     override fun connectTagWithTheme(themeID: Long, tagID: Long) {
         jdbcTemplate.update("INSERT INTO tag_mappings (theme_id, tag_id) values(?, ?)", themeID, tagID)
+    }
+
+    override fun disconnectTagWithTheme(themeID: Long, tagID: Long) {
+        jdbcTemplate.update("DELETE FROM tag_mappings WHERE theme_id = ? AND tag_id = ?", themeID, tagID)
     }
 }

@@ -9,9 +9,9 @@
     <a href="/user" th:if="${user != null}">
         <p>マイページ</p>
     </a>
-    <a href="/logout" th:if="${user != null}">
-        <p>ログアウト</p>
-    </a>
+    <form th:if="${user != null}" th:method="post" th:action="@{/logout}">
+        <input type="submit" value="ログアウト"/>
+    </form>
     <a href="/login" th:if="${user == null}">
         <p>ログイン</p>
     </a>

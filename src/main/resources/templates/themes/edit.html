@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>お題編集</title>
+</head>
+<body>
+<p th:text="${theme.content}"></p>
+
+<div>
+    <form th:method="patch" th:action="@{/themes/{id}/edit(id=${theme.themeID})}" th:object="${themeEditForm}">
+        <div>
+            タグを追加: <input type="text" th:field="*{tags}" />
+            <small>タグを複数付ける場合は空白を入れてください</small>
+            <div>
+                <small th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}">エラーメッセージ</small>
+            </div>
+            <div>
+                <input type="submit" value="追加" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <form th:method="patch" th:action="@{/themes/{id}/edit(id=${theme.themeID})}" th:object="${themeEditForm}">
+        <div th:unless="${tags.isEmpty()}">
+            <div th:each="tag: ${tags}">
+                <input type="checkbox" name="check" th:value="${tag.name}" th:text="${tag.name}" th:field="*{tagCheckBox}"></input>
+            </div>
+            <div>
+                <input type="submit" value="選択したタグを削除" />
+            </div>
+        </div>
+        <p th:if="${tags.isEmpty()}">タグはありません</p>
+    </form>
+</div>
+
+
+<style type="text/css">
+    form {
+        border-bottom: 2px solid #eee;
+        padding: 10px;
+    }
+</style>
+</body>
+</html>

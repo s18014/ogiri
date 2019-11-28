@@ -35,9 +35,11 @@ class LoginController(private val userRepository: UserRepository) {
         return "redirect:/login"
     }
 
-    @RequestMapping("logout")
+    @PostMapping("logout")
     fun logout(httpServletResponse: HttpServletResponse): String {
-        httpServletResponse.addCookie(Cookie("token", null))
+        val cookie = Cookie("token", null)
+        cookie.maxAge = 0
+        httpServletResponse.addCookie(cookie)
         return "redirect:/"
     }
 
